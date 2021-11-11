@@ -35,6 +35,7 @@ public class DBSAndroidTest extends UserBaseTest {
 		//dbspage.sendDataInPAssword(password);
 		} catch (Exception e1) {
 			e1.printStackTrace();
+			System.out.println("This is checking for GIT branch");
 		}
 	}
 }
