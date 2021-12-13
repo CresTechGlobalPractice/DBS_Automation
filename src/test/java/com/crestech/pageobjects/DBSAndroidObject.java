@@ -2476,4 +2476,12 @@ public class DBSAndroidObject {
 	public MobileElement CreditCard_PageHeader() {
 		return CreditCard_PageHeader;
 	}
+	@ElementDescription(value = "OK Button")
+	@AndroidFindBy(xpath = "//android.widget.Button[@text='OK']")
+	private MobileElement Alert_OKButton;
+	
+	public MobileElement Alert_OKButton() {
+		return Alert_OKButton;
+	}
+
 }

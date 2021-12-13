@@ -19,6 +19,7 @@ public class WaitUtils extends CommandPrompt {
 
 	public AppiumDriver<RemoteWebElement> driver = null;
 	private long WAIT_TIME = 90;
+	HandleException obj_handleexception= new HandleException(null,null);
 	public WaitUtils(AppiumDriver<RemoteWebElement> driver2) {
 		try {
 			this.driver = driver2;
@@ -68,12 +69,19 @@ public class WaitUtils extends CommandPrompt {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, WAIT_TIME);
 			wait.until(ExpectedConditions.visibilityOf(element));
-		} catch (Exception e) {
+	} 
+			catch (Exception e) {
 			//e.printStackTrace();
 			System.out.println("Inside take ele visi catch" );
 			throw new HandleException ("WAITELEMENTVISIBLE_EXCEPTION", "Element not visible on the screen ::",e);
 		
 		}
+//		catch (HandleException e) {
+//			obj_handleexception.throwHandleException("SCREENSHOT", " Failed to capture the screenshot ",e);
+//		}
+//		catch (Exception e) {
+//			obj_handleexception.throwException("SCREENSHOT", " Failed to capture the screenshot ",e);
+//		}
 	}
 
 	/**

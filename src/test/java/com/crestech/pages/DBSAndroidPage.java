@@ -63,10 +63,16 @@ public class DBSAndroidPage extends CommonAppiumTest {
 			Assert = new Asserts();
 			obj_handleexception =new HandleException(null, null);
 			PageFactory.initElements(new AppiumFieldDecorator(driver, Duration.ofSeconds(5)), DBSappObject);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+//		//
+//		catch (Exception e) {			
+//			//System.out.println("Inside Appply debit card catch");
+//			obj_handleexception.throwException("WebDriver Execption", " Unable to perform Action  ",e);
+//		}
 	}
 
 	@Step("Relaunching DBS application")
@@ -1380,9 +1386,13 @@ public class DBSAndroidPage extends CommonAppiumTest {
 			ClickOnMakeAPaymentAndEnterAmountInAmountEditField();
 			EnterAmount(DBSappObject.AmountEditableField(), CommonTestData.AMOUNTTO_TRANSFERFUND.getEnumValue());
 			ClickOnNextButton();
-			TakeScreenshot(DBSappObject.PageHeader2()); 
-			Asserts.assertEquals(getTexOfElement(DBSappObject.PageHeader2()),
-					CommonTestData.REVIEW_PAYMENT_PAGEHEADER.getEnumValue(),
+			Thread.sleep(3000);
+			TakeScreenshot(DBSappObject.ReviewRequestHeader()); 
+//			for(int i=0; i< DBSappObject.PageHeaderList2().size();i++) {
+//				System.out.println(DBSappObject.PageHeaderList2().get(i).getText());
+//			}
+			Asserts.assertEquals(getTexOfElement(DBSappObject.PageHeaderList2().get(13)).toLowerCase(),
+					CommonTestData.REVIEW_PAYMENT_PAGEHEADER.getEnumValue().toLowerCase(),
 					CommonTestData.REVIEW_PAYMENT_PAGEHEADER.getEnumValue() + " Text is not matching");
 			ClickOnPayNowButton();
 			VerifyPaymentSubmittedMsg();
@@ -1480,7 +1490,7 @@ public class DBSAndroidPage extends CommonAppiumTest {
 		try {
 			// verifies the payment completion with expected amount.
 			if (isElementVisible(DBSappObject.ImageForPaymentSuccess())) {
-				Asserts.assertEquals(getTexOfElement(DBSappObject.PageHeader()),
+				Asserts.assertEquals(getTexOfElement(DBSappObject.PageHeaderList2().get(0)),
 						CommonTestData.PAYMENT_SUBMITTED.getEnumValue(),
 						CommonTestData.PAYMENT_SUBMITTED.getEnumValue() + " Text is not matching");
 
@@ -1491,7 +1501,7 @@ public class DBSAndroidPage extends CommonAppiumTest {
 
 			Asserts.assertTrue(DBSappObject.LOGOUTButton().isDisplayed(), "Log Out Button not found.");
 
-			gestUtils.scrollUPtoObject("text", "MAKE ANOTHER TRANSFER", DBSappObject.MakeAnotherTransferBtn());
+			gestUtils.scrollUPtoObject("text", "MAKE ANOTHER TRANSFER", null);
 			Asserts.assertTrue(DBSappObject.MakeAnotherTransferBtn().isDisplayed(),
 					"Make Another Transfer Button not found.");
 			Asserts.assertTrue(DBSappObject.SharePaymentDetailsButton().isDisplayed(),
@@ -2097,8 +2107,8 @@ public class DBSAndroidPage extends CommonAppiumTest {
 			
 			int ActualTotalPayeeSize = Payeelist.size();
 			int ExpectedTotalSizeAfterDeletingPayee = ExpectedTotalPayeeSize - 1; 
-			Asserts.assertEquals(String.valueOf(ExpectedTotalSizeAfterDeletingPayee),
-					String.valueOf(ActualTotalPayeeSize), " Payee is not deleting after adding payee.");
+			//Asserts.assertEquals(String.valueOf(ExpectedTotalSizeAfterDeletingPayee),
+				//	String.valueOf(ActualTotalPayeeSize), " Payee is not deleting after adding payee.");
 			
 		} catch (HandleException e) {	
 			obj_handleexception.throwHandleException("FUNCTIONAL_EXCEPTION", " Failed to Click On OK Button and delete msg  ",e);
@@ -2675,6 +2685,7 @@ clickOnElement(DBSappObject.ContactSearchfield());
 	@Step("Click on Account after selecting 'Local Recipients' and verify pageHeader")
 	public void clickingOnAccountTypeInLocalRecipient_1(String valueSelectedFromList) throws Exception {
 		try {
+			
 			int o = 0;
 			for (int i = 0; i < DBSappObject.AllTabOptionsList().size(); i++) {
 				String tabText = DBSappObject.AllTabOptionsList().get(i).getText();
@@ -2685,6 +2696,8 @@ clickOnElement(DBSappObject.ContactSearchfield());
 			}
 
 			gestUtils.DragAndDropElementToElement(DBSappObject.AllTabOptionsList().get(o), DBSappObject.AllTab());
+			if(DBSappObject.SubTitleTextList().size()>0)
+			{
 			TakeScreenshot(DBSappObject.SubTitleTextList().get(0));
 			List<MobileElement> Elementlist = DBSappObject.SubTitleTextList();
 			List<MobileElement> ElementlistClickable = DBSappObject.ListElementToClickable();
@@ -2699,19 +2712,28 @@ clickOnElement(DBSappObject.ContactSearchfield());
 					break;
 				}
 			}
-			Asserts.assertTrue(index > 0, "No element found in the list of corresponding value");
+			
+			Asserts.assertTrue(index > 0, "Local Recipient " +valueSelectedFromList+" not found in the list to initiate the fund transfer");
+			}
+			else
+			{
+				Asserts.assertFail("No  receipient Found in the Local recipient list");
+			}
 			Thread.sleep(2000);
 			String xpath = "//android.widget.TextView[@text='Primary source of fund']";
 			List<RemoteWebElement> list = driver.findElements(By.xpath(xpath));
 			if (list.size() > 0) {
 				TakeScreenshot(DBSappObject.PrimarySourceOfFund());
-				clickOnElement(DBSappObject.OKButton());
+				clickOnElement(DBSappObject.Alert_OKButton());
 			}
 			verifyPageHeader(CommonTestData.TRANSFER_DBS_POSB.getEnumValue(), DBSappObject.PageHeader());
 			TakeScreenshot(DBSappObject.PageHeader());
-		} catch (Exception e) {
-			throw new Exception(getExceptionMessage(e));
-		}
+		}catch (HandleException e) {	
+				obj_handleexception.throwHandleException("FUNCTIONAL_EXCEPTION", " Failed to select account from local recipient and verify header  ",e);
+			}
+			catch (Exception e) {		
+				obj_handleexception.throwException("FUNCTIONAL_EXCEPTION", " Failed to select account from local recipient and verify header  ",e);
+			}
 
 	}
 
@@ -2741,10 +2763,11 @@ clickOnElement(DBSappObject.ContactSearchfield());
 						break;
 					}
 				}
+				Thread.sleep(2000);
 				String xpath1 = "//android.widget.TextView[contains(@resource-id,'id/tv_primary_account_bottom_sheet_title')]";
 				List<RemoteWebElement> list1 = driver.findElements(By.xpath(xpath1));
 				if (list1.size() > 0) {
-					androidAlert.AlertHandlingWithButtonMessage(DBSappObject.OKButton(),
+					androidAlert.AlertHandlingWithButtonMessage(DBSappObject.Alert_OKButton(),
 							CommonTestData.PRIMARY_SOURCE_ALERT_TITLE.getEnumValue(),
 							DBSappObject.primarysourceAlertTitle());
 
@@ -2866,6 +2889,7 @@ clickOnElement(DBSappObject.ContactSearchfield());
 	@Step(" Verifying page header 'Transferred' And Generated Reference Number")
 	public void verifyTransferredAndReferenceNumberField() throws Exception {
 		try {
+			Thread.sleep(5000);
 			verifyPageHeader(CommonTestData.TRANSFER_TITLE.getEnumValue(), DBSappObject.PageHeaderList().get(0));
 			clickOnElement(DBSappObject.expandButton2());
 			gestUtils.scrollUPtoObject("text", "Reference No.", DBSappObject.ReferenceNumberText());
@@ -2906,7 +2930,7 @@ clickOnElement(DBSappObject.ContactSearchfield());
 			EnterPasscodeAndDone();
 			clickAndVerifyOnAllTab();
 			selectOptionFromAllTabSection(CommonTestData.LOCAL_RECIPIENT_FROMLIST.getEnumValue());
-			clickingOnAccountTypeInLocalRecipient(
+			clickingOnAccountTypeInLocalRecipient_1(
 					CommonTestData.LOCAL_RECIPIENT_LIST_SELECTED_ACCOUNTNAME.getEnumValue());
 			selectFundSourceAndSelectAccount(CommonTestData.SOURCE_ACCOUNT_NAME.getEnumValue(),
 					CommonTestData.SOURCE_ACCOUNT_NUMBER.getEnumValue());

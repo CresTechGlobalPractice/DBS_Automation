@@ -143,7 +143,7 @@ public class CommonAppiumTest extends CommandPrompt {
 			return element.isDisplayed();
 		} catch (Exception e) {
 			System.out.println("Inside take ele visi catch" );
-			throw new HandleException ("WAITELEMENTVISIBLE_EXCEPTION", "Element not visible on the screen ::",e);
+			throw new HandleException ("ELEMENTVISIBLE_EXCEPTION", "Element not visible on the screen ::",e);
 		
 		}
 	}
