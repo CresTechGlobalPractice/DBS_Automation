@@ -206,6 +206,10 @@ public enum CommonTestData {
 	EOTTREMITTANCE_NAME("ad rec new ajay"),// BHDeott
 	PURPOSE_OF_TRANSFER_TEXT("Family support (Workers' remittances)"),
 	REVIEW_RECIPIENT_DETAILS("Review Recipient's Details"),
+	EOTT_ACCOUNT_TYPE("Savings"),
+	PURPOSE("Personal Gifts"),
+	MOBILE_NUMBER("9999999990"),
+	
 
 	NAMETO_APPEAR_ON_DEBITCARD("DBS Passion"),
 	REVIEW_APPLICATION("Review Application"),

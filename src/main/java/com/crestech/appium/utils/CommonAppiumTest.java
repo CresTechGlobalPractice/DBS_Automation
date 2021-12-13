@@ -97,15 +97,16 @@ public class CommonAppiumTest extends CommandPrompt {
 		}
 	}
 	
-	public static void pressKey(AppiumDriver driver, Keys key) throws Exception {
+	public void pressKey(AppiumDriver driver, Keys key) throws Exception {
 		try {
 			if(key!=null) {				
 				Actions builder = new Actions(driver); 
 				builder.sendKeys(key).build().perform();
 			}else
 				throw new Exception("Key not provided");
-		} catch (Exception e) {
-			throw new Exception(e);
+		} 
+		catch (Exception e) {			
+			obj_handleexception.throwException("PRESSENTERKEY_EXCEPTION", " Failed to Pressing Enter Key ",e);
 		}
 	}
 
@@ -438,7 +439,7 @@ public class CommonAppiumTest extends CommandPrompt {
 			} else
 				throw new Exception("The element isn't provided or may be null.");
 		} catch (Exception e) {
-			e.printStackTrace(); throw e;
+			throw new HandleException ("ENABLE_EXCEPTION", "Failed To Check Enability of Element ::",e);
 		}
 	}
 
