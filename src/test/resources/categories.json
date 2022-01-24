@@ -1,0 +1,25 @@
+[ 
+  {
+    "name": "Ignored tests", 
+    "matchedStatuses": ["skipped"] 
+  },
+  {
+    "name": "Infrastructure problems",
+    "matchedStatuses": ["broken", "failed"],
+    "messageRegex": ".*digibank Alert.*" 
+  },
+  {
+    "name": "Application CRASH ISSUE",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Application CRASH ISSUE.*" 
+  },
+  {
+    "name": "Data Issue",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Data Issue:*" 
+  },
+  {
+    "name": "Test defects",
+    "matchedStatuses": ["broken"]
+  }
+]

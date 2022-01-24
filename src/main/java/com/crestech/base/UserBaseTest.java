@@ -1,6 +1,7 @@
 package com.crestech.base;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -213,6 +214,10 @@ public class UserBaseTest extends TestListenerAdapter implements ITestListener {
 						+ dateFormat.format(date).replace(" ", "_").replace("-", "") + File.separator+ "allure-results");
 				
 				try {
+					File categoriesJsonFile = new File(System.getProperty("user.dir") + File.separator+ "src"+ File.separator+ 
+								"test"+ File.separator+ "resources"+ File.separator+ "categories.json");
+					 
+			        FileUtils.copyFileToDirectory(categoriesJsonFile, srcDir);
 					FileUtils.forceMkdir(destDir);
 					FileUtils.copyDirectory(srcDir, destDir);
 					Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"allure generate "+destDir+" -o "+System.getProperty("user.dir") + File.separator+ "AllureReport"+ File.separator+"Allure_" + 
