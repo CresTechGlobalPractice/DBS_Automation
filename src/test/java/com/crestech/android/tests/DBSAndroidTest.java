@@ -153,6 +153,7 @@ public class DBSAndroidTest extends UserBaseTest {
 			dbspage1=dbspage;
 			dbspage1.LogInApplication(userName, password);
 			dbspage1.VerifyTopupPaylah();
+			System.out.println(" ");
 		} catch (HandleException e) {
 			dbspage1.verifyDigibankAlert();
 			Asserts.assertFail(e.getCode()+"--> "+ e.getMessage());
