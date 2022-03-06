@@ -311,7 +311,7 @@ public class UserBaseTest extends TestListenerAdapter implements ITestListener {
 			capabilities.setCapability("pCloudy_Username", s.get(12));
 			capabilities.setCapability("pCloudy_ApiKey", s.get(13));
 			capabilities.setCapability("pCloudy_DurationInMinutes", s.get(15));
-			capabilities.setCapability("newCommandTimeout", 600);
+			capabilities.setCapability("newCommandTimeout", 20000);
 			capabilities.setCapability("launchTimeout", 90000);
 			capabilities.setCapability("pCloudy_DeviceFullName", device_udid);
 			capabilities.setCapability("platformVersion", version);
