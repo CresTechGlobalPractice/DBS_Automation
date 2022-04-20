@@ -35,5 +35,8 @@ public class chromeTest extends UserBaseTest {
 		ChromeHomePage chromeHomePage = new ChromeHomePage(driver);
 		chromeHomePage.sendDataInUsername(userName);
 		chromeHomePage.sendDataInPAssword(password);
+		System.out.println("Checking Conflicts1");
+		System.out.println("Checking Conflicts2");
+		System.out.println("Checking Conflicts3");
 	}
 }
