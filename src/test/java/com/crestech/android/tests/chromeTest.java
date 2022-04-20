@@ -36,7 +36,7 @@ public class chromeTest extends UserBaseTest {
 		chromeHomePage.sendDataInUsername(userName);
 		chromeHomePage.sendDataInPAssword(password);
 		System.out.println("Checking Conflicts11");
-		System.out.println("Checking Conflicts22");
+		System.out.println("Checking Conflicts222");
 		System.out.println("Checking Conflicts33");
 	}
 }
